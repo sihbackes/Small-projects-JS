@@ -1,32 +1,22 @@
-const daysEl = document.getElementById('days');
-const hoursEl = document.getElementById('hours');
-const minsEl = document.getElementById('mins');
-const secondsEl = document.getElementById('seconds');
+var newYearsEve = new Date ("1 January 2023 00:00:00" ).getTime();
 
-const catsArriving = '9 July 2022'
+var x =setInterval(function(){
+  var now = new Date().getTime();
+  var distance = newYearsEve -now;
+
+  var days = Math.floor(distance/ (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance %(1000 * 60 * 60 * 24)) / (1000 * 60 *60));
+  var mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60))/1000);
 
 
-function countdown() {
-const catsArrivingDate = new Date(catsArriving);
-const currentDate = new Date();
+  document.getElementById("days").innerHTML =days;
+  document.getElementById("hours").innerHTML =hours;
+  document.getElementById("mins").innerHTML =mins;
+  document.getElementById("seconds").innerHTML =seconds;
 
-const totalSeconds = (catsArrivingDate - currentDate) / 1000;
-
-const days = Math.floor(totalSeconds / 3600 / 24);
-const hours = Math.floor(totalSeconds / 3600) % 24;
-const minutes = Math.floor(totalSeconds / 60) % 60;
-const seconds = Math.floor(totalSeconds) % 60;
-
-daysEl.innerHTML = days;
-hoursEl.innerHTML = formatTime(hours);
-minsEl.innerHTML = formatTime(minutes);
-secondsEl.innerHTML = formatTime(seconds);
-}
-
-function formatTime(time) {
-return time < 10 ? `0${time}` : time;
-}
-//initial
-
-countdown();
-setInterval(countdown, 1000);
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "EXPIRED";
+  }
+}, 1000);
